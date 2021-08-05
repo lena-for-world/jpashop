@@ -29,28 +29,36 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
+    public List<Order> findAllWithMemberDelivery() {
+        return em.createQuery(
+            "select o from Order o" +
+                " join fetch o.member m" +
+                " join fetch o.delivery d", Order.class)
+            .getResultList();
+    }
+
     public List<Order> findAllByString(OrderSearch orderSearch) {
-        String jpql = "select o from Order o join o.member m";
+        String jpql = "select o from Order o join o.member m ";
         boolean isFirstcondition = true;
 
         if(orderSearch.getOrderStatus() != null) {
             if(isFirstcondition) {
-                jpql += "where";
+                jpql += " where ";
                 isFirstcondition = false;
             } else {
-                jpql += "and";
+                jpql += " and ";
             }
             jpql += "o.status = :status";
         }
 
         if(StringUtils.hasText(orderSearch.getMemberName())) {
             if(isFirstcondition) {
-                jpql += "where";
+                jpql += " where ";
                 isFirstcondition = false;
             } else {
-                jpql += "and";
+                jpql += " and ";
             }
-            jpql += "m.name like :name";
+            jpql += "m.name like :name ";
         }
 
         TypedQuery<Order> query = em.createQuery(jpql, Order.class)
