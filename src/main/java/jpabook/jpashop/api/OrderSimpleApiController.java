@@ -22,7 +22,7 @@ public class OrderSimpleApiController {
     private final OrderRepository orderRepository;
     private final OrderQueryDTORepository orderQueryDTORepository;
 
-    @GetMapping("api/v1/orders")
+    @GetMapping("api/v1/simple-orders")
     public List<Order> orderListApi() {
         List<Order> list = orderRepository.findAllByString(new OrderSearch());
         for(Order order : list) {
@@ -33,21 +33,21 @@ public class OrderSimpleApiController {
         return list;
     }
 
-    @GetMapping("api/v2/orders")
+    @GetMapping("api/v2/simple-orders")
     public List<OrderDTO> orderListApi2() {
         List<Order> list = orderRepository.findAllByString(new OrderSearch());
         List<OrderDTO> result = list.stream().map(o -> new OrderDTO(o)).collect(Collectors.toList());
         return result;
     }
 
-    @GetMapping("api/v3/orders")
+    @GetMapping("api/v3/simple-orders")
     public List<OrderDTO> orderListApi3() {
         List<Order> list = orderRepository.findAllWithMemberDelivery();
         List<OrderDTO> result = list.stream().map(o->new OrderDTO(o)).collect(Collectors.toList());
         return result;
     }
 
-    @GetMapping("api/v4/orders")
+    @GetMapping("api/v4/simple-orders")
     public List<OrderQueryDTO> orderListApi4() {
         return orderQueryDTORepository.findOrderDtos();
     }
