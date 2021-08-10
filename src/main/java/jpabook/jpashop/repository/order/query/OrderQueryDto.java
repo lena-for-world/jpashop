@@ -1,21 +1,24 @@
-package jpabook.jpashop.repository.order.simplequery;
+package jpabook.jpashop.repository.order.query;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import jpabook.jpashop.domain.Address;
-import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class OrderQueryDTO {
+@EqualsAndHashCode(of="orderId")
+public class OrderQueryDto {
 
     private Long orderId;
     private String name;
     private LocalDateTime orderDate;
     private OrderStatus status;
     private Address address;
+    private List<OrderItemQueryDto> orderItems;
 
-    public OrderQueryDTO(Long orderId, String name, LocalDateTime orderDate, OrderStatus status, Address address) {
+    public OrderQueryDto(Long orderId, String name, LocalDateTime orderDate, OrderStatus status, Address address) {
         this.orderId = orderId;
         this.name = name;
         this.orderDate = orderDate;
